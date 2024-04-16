@@ -40,6 +40,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         holder.unlockCanvasAndPost(c);
     }
 
+    private void update(){
+        for(RndSquare square : squares)
+            square.move();
+    }
+
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if(event.getAction() == MotionEvent.ACTION_DOWN){
@@ -51,6 +57,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             squares.add(new RndSquare(pos,color,size));
 
             render();
+            update();
         }
 
         return true;
@@ -75,12 +82,23 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         private PointF pos;
         private int size;
         private Paint paint;
+        private int xDir = 1, yDir = 1;
 
         public RndSquare(PointF pos, int color, int size){
             this.pos = pos;
             this.size = size;
             paint = new Paint();
             paint.setColor(color);
+        }
+
+        public void move(){
+            pos.x += xDir * 5;
+            if(pos.x >= 1440 || pos.x <= 0)
+                xDir *= -1;
+
+            pos.y += yDir * 5;
+            if(pos.y >= 2960 || pos.y <= 0)
+                yDir *= -1;
         }
 
         public void draw(Canvas c){
