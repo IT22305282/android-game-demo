@@ -21,15 +21,18 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private SurfaceHolder holder;
     private ArrayList<RndSquare> squares = new ArrayList<>();
     private Random rand = new Random();
+    private GameLoop gameLoop;
 
     public GamePanel(Context context){
         super(context);
         holder = getHolder();
         holder.addCallback(this);
         redPaint.setColor(Color.RED);
+
+        gameLoop = new GameLoop(this);
     }
 
-    private void render(){
+    public void render(){
 
         Canvas c = holder.lockCanvas();
         c.drawColor(Color.BLACK);
@@ -40,7 +43,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         holder.unlockCanvasAndPost(c);
     }
 
-    private void update(){
+    public void update(){
         for(RndSquare square : squares)
             square.move();
     }
@@ -56,8 +59,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
             squares.add(new RndSquare(pos,color,size));
 
-            render();
-            update();
         }
 
         return true;
@@ -65,7 +66,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder holder) {
-        render();
+        gameLoop.startGameLoop();
     }
 
     @Override
