@@ -13,13 +13,14 @@ import android.view.SurfaceView;
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private Paint redPaint = new Paint();
     private SurfaceHolder holder;
-//    private float x,y;
-    private ArrayList<PointF> squarePos = new ArrayList<>();
+    private ArrayList<RndSquare> squares = new ArrayList<>();
+    private Random rand = new Random();
 
     public GamePanel(Context context){
         super(context);
@@ -33,8 +34,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         Canvas c = holder.lockCanvas();
         c.drawColor(Color.BLACK);
 
-        for(PointF pos : squarePos)
-            c.drawRect(pos.x,pos.y,pos.x+50,pos.y+50,redPaint);
+        for(RndSquare square : squares)
+            square.draw(c);
 
         holder.unlockCanvasAndPost(c);
     }
@@ -42,7 +43,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if(event.getAction() == MotionEvent.ACTION_DOWN){
-            squarePos.add(new PointF(event.getX(),event.getY()));
+
+            PointF pos = new PointF(event.getX(), event.getY());
+            int color = Color.rgb(rand.nextInt(256), rand.nextInt(256), rand.nextInt(256));
+            int size = 25 + rand.nextInt(101);
+
+            squares.add(new RndSquare(pos,color,size));
+
             render();
         }
 
@@ -63,4 +70,22 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceDestroyed(@NonNull SurfaceHolder holder) {
 
     }
+
+    private class RndSquare{
+        private PointF pos;
+        private int size;
+        private Paint paint;
+
+        public RndSquare(PointF pos, int color, int size){
+            this.pos = pos;
+            this.size = size;
+            paint = new Paint();
+            paint.setColor(color);
+        }
+
+        public void draw(Canvas c){
+            c.drawRect(pos.x,pos.y,pos.x+size,pos.y+size,paint);
+        }
+    }
+
 }
