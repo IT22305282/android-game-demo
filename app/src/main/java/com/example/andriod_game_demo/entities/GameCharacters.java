@@ -8,7 +8,8 @@ import com.example.andriod_game_demo.R;
 
 public enum GameCharacters {
 
-    PLAYER(R.drawable.goldknight_spritesheet), SKELETON(R.drawable.skeleton_spritesheet);
+    PLAYER(R.drawable.goldknight_spritesheet),
+    SKELETON(R.drawable.skeleton_spritesheet);
 
     private Bitmap spriteSheet;
     private Bitmap[][] sprites = new Bitmap[7][4];
