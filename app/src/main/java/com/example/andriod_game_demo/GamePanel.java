@@ -37,15 +37,19 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         Canvas c = holder.lockCanvas();
         c.drawColor(Color.BLACK);
 
-        for(RndSquare square : squares)
-            square.draw(c);
+        synchronized (squares) {
+            for(RndSquare square : squares)
+                square.draw(c);
+        }
 
         holder.unlockCanvasAndPost(c);
     }
 
-    public void update(){
-        for(RndSquare square : squares)
-            square.move();
+    public void update(double delta){
+        synchronized (squares) {
+            for(RndSquare square : squares)
+                square.move(delta);
+        }
     }
 
 
@@ -57,7 +61,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             int color = Color.rgb(rand.nextInt(256), rand.nextInt(256), rand.nextInt(256));
             int size = 25 + rand.nextInt(101);
 
-            squares.add(new RndSquare(pos,color,size));
+            synchronized (squares) {
+                squares.add(new RndSquare(pos, color, size));
+            }
 
         }
 
@@ -92,12 +98,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             paint.setColor(color);
         }
 
-        public void move(){
-            pos.x += xDir * 5;
+        public void move(double delta){
+            pos.x += xDir * delta * 300;
             if(pos.x >= 1440 || pos.x <= 0)
                 xDir *= -1;
 
-            pos.y += yDir * 5;
+            pos.y += yDir * delta * 300;
             if(pos.y >= 2960 || pos.y <= 0)
                 yDir *= -1;
         }
