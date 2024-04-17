@@ -13,4 +13,9 @@ public final class GameConstants {
         public static final int SCALE_MULTIPLIER = 6;
         public static final int SIZE = DEFAULT_SIZE * SCALE_MULTIPLIER;
     }
+
+    public static final class Animation{
+        public static final int SPEED = 10;
+        public static final int AMOUNT = 4;
+    }
 }
