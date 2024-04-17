@@ -1,5 +1,8 @@
 package com.example.andriod_game_demo;
 
+import static com.example.andriod_game_demo.MainActivity.GAME_HEIGHT;
+import static com.example.andriod_game_demo.MainActivity.GAME_WIDTH;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -44,7 +47,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         gameLoop = new GameLoop(this);
 
-        skeletonPos = new PointF(rand.nextInt(1080), rand.nextInt(2340));
+        skeletonPos = new PointF(rand.nextInt(GAME_WIDTH), rand.nextInt(GAME_HEIGHT));
 //        for(int i = 0; i < 50; i++){
 //            skeletons.add(new PointF(rand.nextInt(1440), rand.nextInt(2960)));
 //        }
@@ -59,7 +62,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         c.drawBitmap(GameCharacters.PLAYER.getSprite(playerAniIndexY, playerFaceDir), x, y, null);
 
-//        c.drawBitmap(GameCharacters.SKELETON.getSprite(playerAniIndexY, skeletonDir), skeletonPos.x, skeletonPos.y,null);
+        c.drawBitmap(GameCharacters.SKELETON.getSprite(playerAniIndexY, skeletonDir), skeletonPos.x, skeletonPos.y,null);
 
 //        for(PointF pos: skeletons){
 //            c.drawBitmap(GameCharacters.SKELETON.getSprite(0,0),  pos.x, pos.y,null);
@@ -78,7 +81,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         switch (skeletonDir){
             case GameConstants.Face_Dir.DOWN:
                 skeletonPos.y += delta * 300;
-                if(skeletonPos.y >= 2140)
+                if(skeletonPos.y >= GAME_HEIGHT)
                     skeletonDir = GameConstants.Face_Dir.UP;
                 break;
             case GameConstants.Face_Dir.UP:
@@ -88,7 +91,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 break;
             case GameConstants.Face_Dir.RIGHT:
                 skeletonPos.x += delta * 300;
-                if(skeletonPos.x >= 1080)
+                if(skeletonPos.x >= GAME_WIDTH)
                     skeletonDir = GameConstants.Face_Dir.LEFT;
                 break;
             case GameConstants.Face_Dir.LEFT:

@@ -11,7 +11,7 @@ import com.example.andriod_game_demo.GamePanel;
 public class TouchEvents {
 
     private GamePanel gamePanel;
-    private float xCenter = 540, yCenter = 1700, radius = 100;
+    private float xCenter = 350, yCenter = 800, radius = 120;
     private Paint cireclePaint, yellowPaint;
     private float xTouch, yTouch;
     private boolean touchDown;
