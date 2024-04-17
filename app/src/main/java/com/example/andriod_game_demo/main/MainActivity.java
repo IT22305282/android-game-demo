@@ -1,13 +1,11 @@
-package com.example.andriod_game_demo;
+package com.example.andriod_game_demo.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.hardware.display.DisplayManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 

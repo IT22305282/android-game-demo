@@ -1,7 +1,7 @@
 package com.example.andriod_game_demo.entities.enemies;
 
-import static com.example.andriod_game_demo.MainActivity.GAME_HEIGHT;
-import static com.example.andriod_game_demo.MainActivity.GAME_WIDTH;
+import static com.example.andriod_game_demo.main.MainActivity.GAME_HEIGHT;
+import static com.example.andriod_game_demo.main.MainActivity.GAME_WIDTH;
 
 import android.graphics.PointF;
 

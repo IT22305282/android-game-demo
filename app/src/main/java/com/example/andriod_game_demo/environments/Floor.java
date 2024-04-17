@@ -3,7 +3,7 @@ package com.example.andriod_game_demo.environments;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import com.example.andriod_game_demo.MainActivity;
+import com.example.andriod_game_demo.main.MainActivity;
 import com.example.andriod_game_demo.R;
 import com.example.andriod_game_demo.helpers.GameConstants;
 import com.example.andriod_game_demo.helpers.interfaces.BitmapMethods;
