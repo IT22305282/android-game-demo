@@ -20,7 +20,7 @@ public class TouchEvents {
         this.gamePanel = gamePanel;
         cireclePaint = new Paint();
         cireclePaint.setStyle(Paint.Style.STROKE);
-        cireclePaint.setStrokeWidth(5);
+        cireclePaint.setStrokeWidth(8);
         cireclePaint.setColor(Color.GRAY);
         yellowPaint = new Paint();
         yellowPaint.setColor(Color.YELLOW);
