@@ -13,6 +13,9 @@ import com.example.andriod_game_demo.environments.MapManager;
 import com.example.andriod_game_demo.helpers.GameConstants;
 import com.example.andriod_game_demo.helpers.interfaces.GameStateInterface;
 import com.example.andriod_game_demo.main.Game;
+import com.example.andriod_game_demo.ui.ButtonImages;
+import com.example.andriod_game_demo.ui.CustomButton;
+import com.example.andriod_game_demo.ui.PlayingUI;
 
 import java.util.ArrayList;
 
@@ -24,18 +27,13 @@ public class Playing extends BaseState implements GameStateInterface {
     private ArrayList<Skeleton> skeletons;
     private MapManager mapManager;
 
-    //FOR UI
-    private float xCenter = 350, yCenter = 800, radius = 120;
-    private Paint cireclePaint;
-    private float xTouch, yTouch;
-    private boolean touchDown;
+    private PlayingUI playingUI;
+
+
 
     public Playing(Game game){
         super(game);
-        cireclePaint = new Paint();
-        cireclePaint.setColor(Color.RED);
-        cireclePaint.setStrokeWidth(5);
-        cireclePaint.setStyle(Paint.Style.STROKE);
+
 
         mapManager = new MapManager();
         player = new Player();
@@ -44,6 +42,9 @@ public class Playing extends BaseState implements GameStateInterface {
         for(int i = 0; i < 10; i++){
             skeletons.add(new Skeleton(new PointF(100,100)));
         }
+
+        playingUI = new PlayingUI(this);
+
     }
 
 
@@ -59,16 +60,16 @@ public class Playing extends BaseState implements GameStateInterface {
     @Override
     public void render(Canvas c) {
         mapManager.draw(c);
-        drawUI(c);
+
 
         drawPlayer(c);
         for(Skeleton skeleton: skeletons)
             drawCharacter(c, skeleton);
+
+        playingUI.draw(c);
     }
 
-    private void drawUI(Canvas c) {
-        c.drawCircle(xCenter, yCenter, radius, cireclePaint);
-    }
+
 
     private void drawPlayer(Canvas c) {
         c.drawBitmap(
@@ -140,6 +141,10 @@ public class Playing extends BaseState implements GameStateInterface {
 
     }
 
+    public void setGameStateToMenu(){
+        game.setCurrentGameState(Game.GameState.MENU);
+    }
+
     public void setPlayerMoveTrue(PointF lastTouchDiff){
         movePlayer = true;
         this.lastTouchDiff = lastTouchDiff;
@@ -152,41 +157,8 @@ public class Playing extends BaseState implements GameStateInterface {
 
     @Override
     public void touchEvents(MotionEvent event) {
-
-        switch (event.getAction()){
-            case MotionEvent.ACTION_DOWN:
-                float x = event.getX();
-                float y = event.getY();
-
-                float a = Math.abs(x - xCenter);
-                float b = Math.abs(y - yCenter);
-                float c = (float) Math.hypot(a,b);
-
-                if(c <= radius){
-                    touchDown = true;
-                    xTouch = x;
-                    yTouch = y;
-                }else{
-                    game.setCurrentGameState(Game.GameState.MENU);
-                }
-
-                break;
-            case MotionEvent.ACTION_MOVE:
-                if(touchDown){
-                    xTouch = event.getX();
-                    yTouch = event.getY();
-
-                    float xDiff = xTouch - xCenter;
-                    float yDiff = yTouch - yCenter;
-
-                    setPlayerMoveTrue(new PointF(xDiff,yDiff));
-                }
-                break;
-            case MotionEvent.ACTION_UP:
-                touchDown = false;
-                setPlayerMoveFalse();
-                break;
-        }
-
+        playingUI.touchEvent(event);
     }
+
+
 }
