@@ -8,6 +8,8 @@ public class CustomButton {
 
     private boolean pushed;
 
+    private int pointerId = -1;
+
     public CustomButton(float x, float y, float width, float height){
         hitbox = new RectF(x,y,x+width,y+height);
     }
@@ -16,8 +18,33 @@ public class CustomButton {
         return hitbox;
     }
 
+    public boolean isPushed(int pointerId) {
+        if(this.pointerId != pointerId)
+            return false;
+        return pushed;
+    }
+
     public boolean isPushed() {
         return pushed;
+    }
+
+    public int getPointerId() {
+        return pointerId;
+    }
+
+    public void unPush(int pointerId){
+        if(this.pointerId != pointerId)
+            return;
+
+        this.pointerId = -1;
+        this.pushed = false;
+    }
+
+    public void setPushed(boolean pushed, int pointerId) {
+        if(this.pushed)
+            return;
+        this.pushed = pushed;
+        this.pointerId = pointerId;
     }
 
     public void setPushed(boolean pushed) {

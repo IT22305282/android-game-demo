@@ -39,11 +39,16 @@ public class Playing extends BaseState implements GameStateInterface {
         player = new Player();
         skeletons = new ArrayList<>();
 
-        for(int i = 0; i < 10; i++){
-            skeletons.add(new Skeleton(new PointF(100,100)));
-        }
+
 
         playingUI = new PlayingUI(this);
+
+    }
+
+    public void spawnSkeleton(){
+        synchronized (skeletons){
+            skeletons.add( new Skeleton(new PointF(player.getHitbox().left - cameraX, player.getHitbox().top - cameraY )));
+        }
 
     }
 
@@ -52,8 +57,10 @@ public class Playing extends BaseState implements GameStateInterface {
     public void update(double delta) {
         updateplayerMove(delta);
         player.update(delta, movePlayer);
-        for(Skeleton skeleton: skeletons)
-            skeleton.update(delta);
+        synchronized (skeletons) {
+            for (Skeleton skeleton : skeletons)
+                skeleton.update(delta);
+        }
         mapManager.setCameraValues(cameraX,cameraY);
     }
 
@@ -63,9 +70,10 @@ public class Playing extends BaseState implements GameStateInterface {
 
 
         drawPlayer(c);
-        for(Skeleton skeleton: skeletons)
-            drawCharacter(c, skeleton);
-
+        synchronized (skeletons) {
+            for (Skeleton skeleton : skeletons)
+                drawCharacter(c, skeleton);
+        }
         playingUI.draw(c);
     }
 
@@ -157,7 +165,7 @@ public class Playing extends BaseState implements GameStateInterface {
 
     @Override
     public void touchEvents(MotionEvent event) {
-        playingUI.touchEvent(event);
+        playingUI.touchEvents(event);
     }
 
 
