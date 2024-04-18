@@ -41,7 +41,7 @@ public class Playing extends BaseState implements GameStateInterface {
         player = new Player();
         skeletons = new ArrayList<>();
 
-        for(int i = 0; i < 50; i++){
+        for(int i = 0; i < 10; i++){
             skeletons.add(new Skeleton(new PointF(100,100)));
         }
     }
